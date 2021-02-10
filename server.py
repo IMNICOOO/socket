@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import socket
 
 
@@ -31,11 +30,22 @@ while True:
             break
         
         dati = dati.decode()
+        operazione, primo, secondo = dati.split(';')
+
         print("Ricevuto: '%s'" % dati)
-        if dati=='0':
+        if dati=='ko':
             print("Chiudo la connessione con " + str(addr_client))
             break
-        dati = "Risposta a : " + str(addr_client) + ". Il valore del contatore è : " + str(contConn)
+        operazione, primo, secondo = dati.split(';')
+        if operazione == "più" :
+            risultato = int(primo) + int(secondo)
+        if operazione == "meno" :
+            risultato = int(primo) - int(secondo)
+        if operazione == "per" :
+            risultato = int(primo) * int(secondo)
+        if operazione == "diviso" :
+            risultato = int(primo) / int(secondo)
+        dati = "il risultato dell'operazione: " + operazione + " tra "+ primo+ " e "+ secondo+ " è: "+ str(risultato)
 
         dati = dati.encode()
 
